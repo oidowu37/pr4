@@ -1,0 +1,10 @@
+{
+  "name": "CS6200 Fall25",
+  "image": "gtomscs6200/fall25-environment:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "postCreateCommand": "pip3 install --upgrade future cryptography pyopenssl ndg-httpsclient pyasn1",
+  "remoteUser": "vscode"
+}
