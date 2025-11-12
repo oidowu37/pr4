@@ -14,6 +14,12 @@ service DFSService {
 
     // 4. REQUIRED (Parts 1 & 2): A method to get the status of a file on the server
 
+    rpc Store(stream FileChunk) returns (FileStatus) {}
+    rpc Fetch(FileName) returns (stream FileChunk) {}
+    rpc Delete(FileName) returns (FileStatus) {}
+    rpc List(Empty) returns (FileList) {}
+    rpc Stat(FileName) returns (FileStatus) {}
+    
     // 5. REQUIRED (Part 2 only): A method to request a write lock from the server
 
     // 6. REQUIRED (Part 2 only): A method named CallbackList to handle asynchronous file listing requests
@@ -25,6 +31,9 @@ service DFSService {
 
     // 8. Any other methods you deem necessary to complete the tasks of this assignment
 
+    rpc RequestWriteLock(WriteLockRequest) returns (WriteLockResponse) {}
+    rpc ReleaseWriteLock(WriteLockRequest) returns (Empty) {}
+    rpc CallbackList(stream Empty) returns (stream FileListWithMetadata) {}
 
 }
 

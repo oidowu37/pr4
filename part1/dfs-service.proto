@@ -2,24 +2,37 @@ syntax = "proto3";
 
 package dfs_service;
 
-service DFSService {
+message Empty {}
 
-    // Add your service calls here
-
-    // 1. REQUIRED (Parts 1 & 2): A method to store files on the server
-
-    // 2. REQUIRED (Parts 1 & 2): A method to fetch files from the server
-
-    // 3. REQUIRED (Parts 1 & 2): A method to delete files from the server
-
-    // 4. REQUIRED (Parts 1 & 2): A method to list all files on the server
-
-    // 5. REQUIRED (Parts 1 & 2): A method to get the status of a file on the server
-
-    // 7. Any other methods you deem necessary to complete the tasks of this assignment
-
-
+message FileName {
+    string name = 1;
 }
 
-// Add your message types here
+message FileChunk {
+    string filename = 1;
+    bytes data = 2;
+}
 
+message FileStatus {
+    string filename = 1;
+    int32 size = 2;
+    int32 mtime = 3;
+    int32 ctime = 4;
+}
+
+message FileInfo {
+    string name = 1;
+    int32 mtime = 2;
+}
+
+message FileList {
+    repeated FileInfo files = 1;
+}
+
+service DFSService {
+    rpc Store(stream FileChunk) returns (FileStatus) {}
+    rpc Fetch(FileName) returns (stream FileChunk) {}
+    rpc Delete(FileName) returns (FileStatus) {}
+    rpc List(Empty) returns (FileList) {}
+    rpc Stat(FileName) returns (FileStatus) {}
+}
